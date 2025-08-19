@@ -105,6 +105,9 @@ const Home = () => {
              <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
            </div>
            <div className="flex items-center gap-4">
+            <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
+               Produtos
+             </Button>
              <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
                Serviços
              </Button>
@@ -172,6 +175,9 @@ const Home = () => {
                 <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
               </div>
               <div className="flex items-center gap-4">
+                <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
+               Produtos
+             </Button>
                 <Button variant="ghost" className="text-white" onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
                   Serviços
                 </Button>
@@ -188,6 +194,9 @@ const Home = () => {
           <div className="container mx-auto px-4">
             <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
               Nossos Serviços
+              <p className="text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
+                Qualidade, atenção ao detalhe e ambiente acolhedor. Escolha o serviço ideal e sinta a diferença!
+              </p>
             </h3>
 
             {/* Botões em linha */}
@@ -482,6 +491,7 @@ const Home = () => {
             <div>
               <h5 className="font-semibold mb-2">Horário</h5>
               <p className="text-sm">Segunda a Sábado: 09:00 - 19:30</p>
+              <p className="text-sm">Domingo: 09:00 - 13:00</p>
             </div>
 
             <div>
@@ -492,7 +502,9 @@ const Home = () => {
 
             <div>
               <h5 className="font-semibold mb-2">Localização</h5>
-              <p className="text-sm">Rua Exemplo 123, 3100-000 Pombal</p>
+              <p className="text-sm">Av. Heróis do Ultramar 61
+              3100-462 Pombal
+              </p>
             </div>
           </div>
 
