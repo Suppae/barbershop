@@ -282,10 +282,11 @@ const Booking = () => {
                   <SelectValue placeholder="Selecione o tipo de corte" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border z-50">
-                  <SelectItem value="corte clássico">Corte Clássico</SelectItem>
+                  <SelectItem value="corte clássico">Clássico</SelectItem>
                   <SelectItem value="degradê">Degradê</SelectItem>
-                  <SelectItem value="barba">Barba</SelectItem>
-                  <SelectItem value="cabelo e barba">Cabelo e Barba</SelectItem>
+                  <SelectItem value="barba">Personalizado</SelectItem>
+                  <SelectItem value="cabelo e barba">Clássico+barba</SelectItem>
+                  <SelectItem value="cabelo e barba">Degradê+barba</SelectItem>
                 </SelectContent>
               </Select>
             </div>
