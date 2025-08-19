@@ -101,12 +101,16 @@ const Home = () => {
             <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
           </div>
           <div className="flex items-center gap-4">
+            <Button variant="ghost" className="text-white" onClick={() => navigate("/products")}>
+              Produtos
+            </Button>
             <Button variant="ghost" className="text-white" onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
               Serviços
             </Button>
             <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
               Marcar Agendamento
             </Button>
+            
           </div>
         </div>
       </header>
