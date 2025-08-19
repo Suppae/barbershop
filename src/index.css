@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 45 15% 8%;
+    --foreground: 45 85% 85%;
+
+    --card: 45 12% 12%;
+    --card-foreground: 45 85% 85%;
+
+    --popover: 45 12% 12%;
+    --popover-foreground: 45 85% 85%;
+
+    --primary: 45 100% 60%;
+    --primary-foreground: 45 15% 8%;
+    --primary-glow: 45 100% 70%;
+
+    --secondary: 45 8% 18%;
+    --secondary-foreground: 45 85% 85%;
+
+    --muted: 45 8% 18%;
+    --muted-foreground: 45 30% 50%;
+
+    --accent: 45 90% 70%;
+    --accent-foreground: 45 15% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 45 15% 25%;
+    --input: 45 15% 25%;
+    --ring: 45 100% 60%;
+
+    /* Custom gradients and shadows */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --shadow-luxury: 0 25px 50px -12px hsl(45 100% 30% / 0.4);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 45 12% 12%;
+
+    --sidebar-foreground: 45 85% 85%;
+
+    --sidebar-primary: 45 100% 60%;
+
+    --sidebar-primary-foreground: 45 15% 8%;
+
+    --sidebar-accent: 45 8% 18%;
+
+    --sidebar-accent-foreground: 45 85% 85%;
+
+    --sidebar-border: 45 15% 25%;
+
+    --sidebar-ring: 45 100% 60%;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 45 100% 85%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 45 100% 85%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 45 100% 85%;
+
+    --primary: 45 100% 70%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 45 100% 85%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 45 40% 60%;
+
+    --accent: 45 100% 80%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 45 100% 70%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 45 100% 85%;
+    --sidebar-primary: 45 100% 70%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 45 100% 85%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 45 100% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes slideReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Dynamic animations for barber elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scissors-cut {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-15deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+  75% {
+    transform: rotate(15deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.floating-scissors {
+  animation: float 6s ease-in-out infinite;
+}
+
+.rotating-scissors {
+  animation: rotate 20s linear infinite;
+}
+
+.bouncing-element {
+  animation: bounce 2s infinite;
+}
+
+.cutting-scissors {
+  animation: scissors-cut 3s ease-in-out infinite;
+}
+
+.fade-pulse {
+  animation: fadeInOut 4s ease-in-out infinite;
+}

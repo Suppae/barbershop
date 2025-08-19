@@ -1,0 +1,314 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Scissors, Clock, Star, MapPin, Phone, Mail } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  const services = [
+    { name: "Degradê", price: "€14", duration: "(45min)", icon: Scissors },
+    { name: "Clássico", price: "€12", duration: "(30min)", icon: Scissors },
+    { name: "Personalizado", price: "€16", duration: "", icon: Scissors },
+    { name: "Clássico + Barba", price: "€18", duration: "(60min)", icon: Scissors },
+    { name: "Degradê + Barba", price: "€20", duration: "(60min)", icon: Scissors },
+  ];
+
+  const features = [
+    { icon: Clock, title: "Horário Flexível", description: "Segunda a Domingo (Dom até 13h)" },
+    { icon: Star, title: "Qualidade Premium", description: "Profissionais experientes" },
+    { icon: MapPin, title: "Localização Central", description: "Fácil acesso e estacionamento" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <Scissors className="absolute top-20 left-10 w-8 h-8 text-primary/20 floating-scissors" style={{ animationDelay: '0s' }} />
+        <Scissors className="absolute top-40 right-20 w-6 h-6 text-primary/15 rotating-scissors" style={{ animationDelay: '2s' }} />
+        <Scissors className="absolute bottom-60 left-20 w-10 h-10 text-primary/10 cutting-scissors" style={{ animationDelay: '1s' }} />
+        <Scissors className="absolute top-60 left-1/3 w-7 h-7 text-primary/20 fade-pulse" style={{ animationDelay: '3s' }} />
+        <Scissors className="absolute bottom-40 right-10 w-9 h-9 text-primary/15 floating-scissors" style={{ animationDelay: '4s' }} />
+        <Scissors className="absolute top-1/2 right-1/4 w-5 h-5 text-primary/25 bouncing-element" style={{ animationDelay: '1.5s' }} />
+      </div>
+
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_hsl(var(--primary)/0.1)_0%,_transparent_50%)]" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="mb-8">
+            <img 
+              src="/lovable-uploads/b0e3f5c8-e91c-458a-b3e6-1033a3eaa5f3.png" 
+              alt="JB Barber Shop Logo" 
+              className="w-48 h-32 mx-auto mb-6 object-contain shadow-luxury"
+            />
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+            BARBER SHOP
+          </h1>
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-primary">
+            JB
+          </h2>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Experiência premium em cuidados masculinos. Cortes modernos, barbas impecáveis, 
+            ambiente sofisticado.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center relative">
+            <Button 
+              size="lg" 
+              className="bg-gradient-primary hover:opacity-90 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6 bouncing-element"
+              onClick={() => navigate("/booking")}
+            >
+              Marcar Agendamento
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6"
+              onClick={() => document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Ver Serviços
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services-section" className="py-20 bg-muted/5">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+            Nossos Serviços
+          </h3>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            {services.map((service, index) => (
+              <Card key={index} className="bg-card border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-luxury group transform hover:scale-105">
+                <CardContent className="p-6 text-center relative">
+                  <service.icon className="w-12 h-12 mx-auto mb-4 text-primary group-hover:scale-110 transition-transform duration-300 cutting-scissors" />
+                  <h4 className="text-xl font-semibold mb-2 text-foreground">{service.name}</h4>
+                  <p className="text-3xl font-bold text-primary">{service.price}</p>
+                  {service.duration && <p className="text-sm text-muted-foreground mt-1">{service.duration}</p>}
+                  {index % 2 === 0 && (
+                    <Scissors className="absolute -top-2 -right-2 w-6 h-6 text-primary/30 rotating-scissors" style={{ animationDelay: `${index * 0.5}s` }} />
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+            Por Que Escolher JB?
+          </h3>
+          
+          <div className="grid md:grid-cols-3 gap-12 relative">
+            {features.map((feature, index) => (
+              <div key={index} className="text-center group relative">
+                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 floating-scissors">
+                  <feature.icon className="w-10 h-10 text-primary-foreground" />
+                </div>
+                <h4 className="text-2xl font-semibold mb-4 text-foreground">{feature.title}</h4>
+                <p className="text-lg text-muted-foreground">{feature.description}</p>
+                {index === 1 && (
+                  <Scissors className="absolute -top-4 -left-4 w-8 h-8 text-primary/20 fade-pulse" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-20 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+            O Nosso Espaço
+          </h3>
+          
+          <div className="relative">
+            <div className="flex gap-8 animate-[slide_20s_linear_infinite]">
+              <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
+                <img 
+                  src="/lovable-uploads/ac928bf5-da4e-4cb8-989b-bc44add0c496.png" 
+                  alt="Interior da barbearia JB - profissionais a trabalhar" 
+                  className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
+                <img 
+                  src="/lovable-uploads/b2cbe8c5-8591-4f7c-ad72-09f4bab236c6.png" 
+                  alt="Ambiente profissional da barbearia JB" 
+                  className="w-full h-80 object-cover object-bottom transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
+                <img 
+                  src="/lovable-uploads/ac928bf5-da4e-4cb8-989b-bc44add0c496.png" 
+                  alt="Interior da barbearia JB - profissionais a trabalhar" 
+                  className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
+                <img 
+                  src="/lovable-uploads/b2cbe8c5-8591-4f7c-ad72-09f4bab236c6.png" 
+                  alt="Ambiente profissional da barbearia JB" 
+                  className="w-full h-80 object-cover object-bottom transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <p className="text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
+            Ambiente moderno e profissional onde cada detalhe é pensado para proporcionar 
+            a melhor experiência em cuidados masculinos.
+          </p>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-muted/5 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+            O Que Dizem os Nossos Clientes
+          </h3>
+          
+          <div className="relative">
+            <div className="flex gap-8 animate-[slideReverse_25s_linear_infinite]">
+              <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">"Excelente atendimento! O Júlio é um verdadeiro artista com a tesoura."</p>
+                <p className="text-sm text-muted-foreground">- Miguel Santos</p>
+              </div>
+              
+              <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">"Ambiente top, profissionais de qualidade. Recomendo vivamente!"</p>
+                <p className="text-sm text-muted-foreground">- João Silva</p>
+              </div>
+              
+              <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">"O Brando fez um degradê perfeito! Voltarei certamente."</p>
+                <p className="text-sm text-muted-foreground">- Carlos Ferreira</p>
+              </div>
+              
+              <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">"Melhor barbearia da região! Serviço 5 estrelas."</p>
+                <p className="text-sm text-muted-foreground">- Pedro Costa</p>
+              </div>
+              
+              <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">"Sempre saio satisfeito! Equipa muito profissional."</p>
+                <p className="text-sm text-muted-foreground">- Rui Mendes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-muted/5">
+        <div className="container mx-auto px-4">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+            Contacto & Localização
+          </h3>
+          
+          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            <Card className="bg-card border-primary/20">
+              <CardContent className="p-8">
+                <h4 className="text-2xl font-semibold mb-6 text-foreground">Informações de Contacto</h4>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <Phone className="w-6 h-6 text-primary" />
+                    <span className="text-lg">+351 912 345 678</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Mail className="w-6 h-6 text-primary" />
+                    <span className="text-lg">info@jbbarbershop.pt</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <MapPin className="w-6 h-6 text-primary" />
+                    <span className="text-lg">Av. Heróis do Ultramar 61<br />3100-462 Pombal</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-card border-primary/20">
+              <CardContent className="p-8">
+                <h4 className="text-2xl font-semibold mb-6 text-foreground">Horário de Funcionamento</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span>Segunda - Sexta</span>
+                    <span className="text-primary font-semibold">9:00 - 19:30</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Sábado</span>
+                    <span className="text-primary font-semibold">9:00 - 19:30</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Domingo</span>
+                    <span className="text-primary font-semibold">9:00 - 13:00</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+            Pronto para o Seu Novo Look?
+          </h3>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Agende já o seu horário e experimente o melhor em cuidados masculinos
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-gradient-primary hover:opacity-90 transition-all duration-300 transform hover:scale-105 text-lg px-12 py-6 relative group"
+            onClick={() => navigate("/booking")}
+          >
+            <Scissors className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-foreground/70 group-hover:cutting-scissors" />
+            Agendar Agora
+            <Scissors className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-foreground/70 group-hover:cutting-scissors" style={{ animationDelay: '0.5s' }} />
+          </Button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;
