@@ -47,7 +47,7 @@ const Home = () => {
       duration: "(45min)",
       icon: Scissors,
       description:
-        "Degradê moderno com transição suave. Ideal para quem gosta de um acabamento limpo e atual.",
+        "Degradê moderno com transição suave. Ideal para quem gosta de um acabamento limpo, atual e sofisticado.",
     },
     {
       name: "Clássico",
