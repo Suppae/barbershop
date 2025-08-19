@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Scissors, Clock, Star, MapPin, Phone, Mail } from "lucide-react";
+import { Scissors, Clock, Star, MapPin, Phone, Mail, Instagram, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
@@ -23,13 +23,14 @@ const Home = () => {
   useEffect(() => {
     const onScroll = () => {
       const hero = heroRef.current;
-      const headerHeight = 72; // ajustar se necessário
-      if (hero) {
-        const bottom = hero.getBoundingClientRect().bottom;
-        setIsHeaderSolid(bottom <= headerHeight);
-      } else {
+      const headerHeight = 72;
+      if (!hero) {
         setIsHeaderSolid(window.scrollY > 20);
+        return;
       }
+      const rect = hero.getBoundingClientRect();
+      const leftHero = rect.bottom <= headerHeight; // true quando já saíste da hero
+      setIsHeaderSolid(leftHero);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -94,26 +95,25 @@ const Home = () => {
 
   return (
     <>
-      {/* Header: transparente sobre a hero, fica sólido após scroll */}
-      <header className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${isHeaderSolid ? 'bg-background shadow-lg' : 'bg-transparent'}`}>
-        <div className="container mx-auto px-4 flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
-            <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
-          </div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" className="text-white" onClick={() => navigate("/products")}>
-              Produtos
-            </Button>
-            <Button variant="ghost" className="text-white" onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
-              Serviços
-            </Button>
-            <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
-              Marcar Agendamento
-            </Button>
-            
-          </div>
-        </div>
-      </header>
+      {/* Header FIXED (sempre no DOM — visível com transição quando isHeaderSolid === true) */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transform transition-transform transition-opacity duration-300 ease-in-out
+                    ${isHeaderSolid ? 'translate-y-0 opacity-100 pointer-events-auto bg-background shadow-lg' : '-translate-y-6 opacity-0 pointer-events-none bg-transparent'}`}
+      >
+         <div className="container mx-auto px-4 flex items-center justify-between h-20">
+           <div className="flex items-center gap-3">
+             <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
+           </div>
+           <div className="flex items-center gap-4">
+             <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
+               Serviços
+             </Button>
+             <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
+               Marcar Agendamento
+             </Button>
+           </div>
+         </div>
+       </header>
       
       <div className="min-h-screen bg-background relative overflow-hidden">
         {/* Animated Background Elements */}
@@ -137,7 +137,7 @@ const Home = () => {
           {/* overlay escuro para melhorar contraste do texto */}
           <div className="absolute inset-0 bg-black/40" />
 
-          <div className="container mx-auto px-0 text-center relative z-10">
+          <div className="container mx-auto px-4 text-center relative z-10">
 
             {/* mantive apenas "JB" como título sobre a imagem, texto em branco */}
 
@@ -162,6 +162,23 @@ const Home = () => {
               >
                 Ver Serviços
               </Button>
+            </div>
+          </div>
+
+          {/* Header dentro da hero: posição absolute (faz scroll junto com a secção) */}
+          <div className="absolute top-0 left-0 right-0 z-40">
+            <div className="container mx-auto px-4 flex items-center justify-between h-20">
+              <div className="flex items-center gap-3">
+                <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
+              </div>
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" className="text-white" onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
+                  Serviços
+                </Button>
+                <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
+                  Marcar Agendamento
+                </Button>
+              </div>
             </div>
           </div>
         </section>
@@ -436,6 +453,61 @@ const Home = () => {
             </Button>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="bg-card border-t border-primary/10 py-8">
+          <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div>
+              <h5 className="font-semibold mb-2">Segue-nos</h5>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://www.instagram.com/jb.barbershop.pbl"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram JB Barbershop"
+                  className="text-primary hover:opacity-90"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="X (Twitter) JB Barbershop"
+                  className="text-muted-foreground hover:opacity-90"
+                >
+                  <X className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h5 className="font-semibold mb-2">Horário</h5>
+              <p className="text-sm">Segunda a Sábado: 09:00 - 19:30</p>
+            </div>
+
+            <div>
+              <h5 className="font-semibold mb-2">Contactos</h5>
+              <p className="text-sm">+351 912 345 000</p>
+              <p className="text-sm">+351 912 345 111</p>
+            </div>
+
+            <div>
+              <h5 className="font-semibold mb-2">Localização</h5>
+              <p className="text-sm">Rua Exemplo 123, 3100-000 Pombal</p>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 mt-6 flex flex-col md:flex-row items-center justify-between gap-2">
+            <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} JB Barbershop. Todos os direitos reservados.</p>
+            <a
+              href="https://www.livroreclamacoes.pt/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-muted-foreground hover:underline"
+            >
+              Livro de Reclamações
+            </a>
+          </div>
+        </footer>
       </div>
     </>
   );
