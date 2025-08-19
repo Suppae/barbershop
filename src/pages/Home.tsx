@@ -39,7 +39,7 @@ const Home = () => {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="mb-8">
             <img 
-              src="/lovable-uploads/b0e3f5c8-e91c-458a-b3e6-1033a3eaa5f3.png" 
+              src="/images/logo.png" 
               alt="JB Barber Shop Logo" 
               className="w-48 h-32 mx-auto mb-6 object-contain shadow-luxury"
             />
@@ -137,28 +137,28 @@ const Home = () => {
             <div className="flex gap-8 animate-[slide_20s_linear_infinite]">
               <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
                 <img 
-                  src="/lovable-uploads/ac928bf5-da4e-4cb8-989b-bc44add0c496.png" 
+                  src="/images/barbeiro2.png" 
                   alt="Interior da barbearia JB - profissionais a trabalhar" 
                   className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
                 <img 
-                  src="/lovable-uploads/b2cbe8c5-8591-4f7c-ad72-09f4bab236c6.png" 
+                  src="/images/barbeiro1.png" 
                   alt="Ambiente profissional da barbearia JB" 
                   className="w-full h-80 object-cover object-bottom transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
                 <img 
-                  src="/lovable-uploads/ac928bf5-da4e-4cb8-989b-bc44add0c496.png" 
+                  src="/images/barbeiro2.png" 
                   alt="Interior da barbearia JB - profissionais a trabalhar" 
                   className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <div className="min-w-[400px] group overflow-hidden rounded-xl shadow-luxury">
                 <img 
-                  src="/lovable-uploads/b2cbe8c5-8591-4f7c-ad72-09f4bab236c6.png" 
+                  src="/images/barbeiro1.png" 
                   alt="Ambiente profissional da barbearia JB" 
                   className="w-full h-80 object-cover object-bottom transition-transform duration-300 group-hover:scale-110"
                 />
