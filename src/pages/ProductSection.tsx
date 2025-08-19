@@ -5,7 +5,7 @@ const products = [
   {
     name: "Pomada Modeladora",
     price: "€12",
-    image: "/images/produto1.png",
+    image: "/images/oleo.jpeg",
     description: "Fixação forte, acabamento natural. Ideal para todos os tipos de cabelo.",
   },
   {

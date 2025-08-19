@@ -331,9 +331,26 @@ const Home = () => {
         {/* Testimonials Section */}
         <section className="py-20 bg-muted/5 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
-              O Que Dizem os Nossos Clientes
-            </h3>
+            <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
+              Deixa-nos a tua opinião!
+              </h3>
+              <div className="flex justify-center mb-4">
+                <Button
+                  size="lg"
+                  className="bg-gradient-primary px-6 py-3 "
+                  asChild
+                >
+                  <a
+                    href="https://www.google.com/maps/place/JB+BARBER+SHOP/@39.9172688,-8.623465,17z/data=!4m8!3m7!1s0xd2267b6c089c8ed:0x84726e41a2ca5d8e!8m2!3d39.9172688!4d-8.623465!9m1!1b1!16s%2Fg%2F11xdg4yp7d?entry=ttu&g_ep=EgoyMDI1MDgxNy4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  Google
+                  </a>
+                </Button>
+              </div>
+              
+            
             
             <div className="relative">
               <div className="flex gap-8 animate-[slideReverse_25s_linear_infinite]">
