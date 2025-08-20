@@ -104,7 +104,12 @@ const Home = () => {
         {/* Mobile Header */}
         <div className="container mx-auto px-2 flex items-center justify-between h-16 sm:hidden relative">
           {/* Logo à esquerda */}
-          <img src="/images/logo2.png" alt="JB Barber Shop" className="w-24 h-auto object-contain" />
+          <img
+            src="/images/logo2.png"
+            alt="JB Barber Shop"
+            className="w-24 h-auto object-contain cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          />
 
           {/* Botão Marcar Agendamento ao centro absoluto */}
           <div className="absolute left-1/2 -translate-x-1/2">
@@ -164,7 +169,12 @@ const Home = () => {
         {/* Desktop Header */}
         <div className="container mx-auto px-4 hidden sm:flex items-center justify-between h-20">
           <div className="flex items-center gap-3">
-            <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
+            <img
+              src="/images/logo2.png"
+              alt="JB Barber Shop"
+              className="w-36 h-auto object-contain cursor-pointer"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
@@ -234,7 +244,12 @@ const Home = () => {
           <div className="absolute top-0 left-0 right-0 z-40">
             <div className="container mx-auto px-4 flex items-center justify-between h-20">
               <div className="flex items-center gap-3">
-                <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
+                <img
+                  src="/images/logo2.png"
+                  alt="JB Barber Shop"
+                  className="w-36 h-auto object-contain cursor-pointer"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                />
               </div>
               <div className="flex items-center gap-4">
                 
