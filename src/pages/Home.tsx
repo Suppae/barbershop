@@ -193,7 +193,10 @@ const Home = () => {
         <section id="services-section" className="py-20 bg-muted/5">
           <div className="container mx-auto px-4">
             <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
-              Nossos Serviços
+              Os Nossos Serviços
+              <div className="flex justify-center mb-8">
+                <div className="h-1 w-80 bg-[hsl(45,15%,20%)] rounded-full" />
+              </div>
               <p className="text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
                 Qualidade, atenção ao detalhe e ambiente acolhedor. Escolha o serviço ideal e sinta a diferença!
               </p>
