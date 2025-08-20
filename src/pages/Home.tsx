@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Scissors, Clock, Star, MapPin, Phone, Mail, Instagram, X } from "lucide-react";
+import { Scissors, Clock, Star, MapPin, Phone, Mail, Instagram, X, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
@@ -16,6 +16,7 @@ const Home = () => {
       "Degradê + Barba",
     ].indexOf("Clássico")
   );
+  const [menuOpen, setMenuOpen] = useState(false);
   // header / hero scroll detection
   const heroRef = useRef<HTMLElement | null>(null);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
@@ -100,23 +101,84 @@ const Home = () => {
         className={`fixed top-0 left-0 right-0 z-50 transform transition-transform transition-opacity duration-300 ease-in-out
                     ${isHeaderSolid ? 'translate-y-0 opacity-100 pointer-events-auto bg-background shadow-lg' : '-translate-y-6 opacity-0 pointer-events-none bg-transparent'}`}
       >
-         <div className="container mx-auto px-4 flex items-center justify-between h-20">
-           <div className="flex items-center gap-3">
-             <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
-           </div>
-           <div className="flex items-center gap-4">
+        {/* Mobile Header */}
+        <div className="container mx-auto px-2 flex items-center justify-between h-16 sm:hidden relative">
+          {/* Logo à esquerda */}
+          <img src="/images/logo2.png" alt="JB Barber Shop" className="w-24 h-auto object-contain" />
+
+          {/* Botão Marcar Agendamento ao centro absoluto */}
+          <div className="absolute left-1/2 -translate-x-1/2">
+            <Button
+              size="sm"
+              className="bg-gradient-primary px-3 py-2"
+              onClick={() => navigate("/booking")}
+            >
+              Marcar
+            </Button>
+          </div>
+
+          {/* Menu à direita */}
+          <button
+            className="ml-2 p-2 rounded-full text-primary focus:outline-none"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Abrir menu"
+          >
+            <Menu className="w-7 h-7" />
+          </button>
+
+          {/* Menu lateral */}
+          {menuOpen && (
+            <div className="fixed top-0 right-0 w-48 h-full bg-card shadow-lg z-50 flex flex-col items-end p-4 animate-slide-in">
+              <button
+                className="mb-6 p-2 text-muted-foreground"
+                onClick={() => setMenuOpen(false)}
+                aria-label="Fechar menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <Button
+                variant="ghost"
+                className="w-full mb-2 text-foreground"
+                onClick={() => { navigate("/products"); setMenuOpen(false); }}
+              >
+                Produtos
+              </Button>
+              <Button
+                variant="ghost"
+                className="w-full mb-2 text-foreground"
+                onClick={() => { document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); }}
+              >
+                Serviços
+              </Button>
+              <Button
+                variant="ghost"
+                className="w-full text-foreground"
+                onClick={() => { navigate("/booking"); setMenuOpen(false); }}
+              >
+                Marcações
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Header */}
+        <div className="container mx-auto px-4 hidden sm:flex items-center justify-between h-20">
+          <div className="flex items-center gap-3">
+            <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
+          </div>
+          <div className="flex items-center gap-4">
             <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
-               Produtos
-             </Button>
-             <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
-               Serviços
-             </Button>
-             <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
-               Marcar Agendamento
-             </Button>
-           </div>
-         </div>
-       </header>
+              Produtos
+            </Button>
+            <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
+              Serviços
+            </Button>
+            <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
+              Marcar Agendamento
+            </Button>
+          </div>
+        </div>
+      </header>
       
       <div className="min-h-screen bg-background relative overflow-hidden">
         {/* Animated Background Elements */}
@@ -175,12 +237,8 @@ const Home = () => {
                 <img src="/images/logo2.png" alt="JB Barber Shop" className="w-36 h-auto object-contain" />
               </div>
               <div className="flex items-center gap-4">
-                <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
-               Produtos
-             </Button>
-                <Button variant="ghost" className="text-white" onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
-                  Serviços
-                </Button>
+                
+                
                 <Button size="lg" className="bg-gradient-primary px-4 py-2" onClick={() => navigate("/booking")}>
                   Marcar Agendamento
                 </Button>
