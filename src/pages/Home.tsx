@@ -589,8 +589,8 @@ const Home = () => {
 
             <div>
               <h5 className="font-semibold mb-2">Contactos</h5>
-              <p className="text-sm">+351 912 345 000</p>
-              <p className="text-sm">+351 912 345 111</p>
+              <p className="text-sm">961817270</p>
+              <p className="text-sm">912773460</p>
             </div>
 
             <div>
