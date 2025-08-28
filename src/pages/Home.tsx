@@ -330,6 +330,35 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Team Section - NOVA SECÇÃO ADICIONADA */}
+        <section className="py-20 bg-muted/5">
+          <div className="container mx-auto px-4">
+            <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
+              Os Nossos Profissionais
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 justify-center">
+              {/* Exemplo de profissionais, personalize conforme necessário */}
+              <Card className="bg-card border-primary/20 shadow-luxury">
+                <CardContent className="p-6 flex flex-col items-center">
+                  <img src="/images/barbeiro1.png" alt="Júlio Barreto" className="w-28 h-28 rounded-full object-cover mb-4" />
+                  <h4 className="text-xl font-semibold mb-2 text-foreground">Júlio Barreto</h4>
+                  <p className="text-muted-foreground text-center mb-2">Especialista em cortes clássicos e degradê. Fundador da JB Barber Shop.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card border-primary/20 shadow-luxury">
+                <CardContent className="p-6 flex flex-col items-center">
+                  <img src="/images/Brando.PNG" alt="Brando Silva" className="w-28 h-28 rounded-full object-cover mb-4" />
+                  <h4 className="text-xl font-semibold mb-2 text-foreground">Brando Peral</h4>
+                  <p className="text-muted-foreground text-center mb-2">Barbeiro criativo, especialista em personalização de estilos e barbas.</p>
+                </CardContent>
+              </Card>
+            </div>
+            <p className="text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
+              Conheça a equipa que faz da JB Barber Shop uma referência em qualidade e profissionalismo.
+            </p>
+          </div>
+        </section>
+
         {/* Features Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
@@ -497,12 +526,12 @@ const Home = () => {
                   <h4 className="text-2xl font-semibold mb-6 text-foreground">Informações de Contacto</h4>
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <Phone className="w-6 h-6 text-primary" />
-                      <span className="text-lg">+351 912 345 678</span>
+                      <Phone className="w-6 h-6 text-primary"/>
+                      <span className="text-lg">961 817 270</span>
                     </div>
                     <div className="flex items-center gap-4">
                       <Mail className="w-6 h-6 text-primary" />
-                      <span className="text-lg">info@jbbarbershop.pt</span>
+                      <span className="text-lg">peralebarreto.jb@gmail.com</span>
                     </div>
                     <div className="flex items-center gap-4">
                       <MapPin className="w-6 h-6 text-primary" />
@@ -518,15 +547,11 @@ const Home = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span>Segunda - Sexta</span>
-                      <span className="text-primary font-semibold">9:00 - 19:30</span>
+                      <span className="text-primary font-semibold">9:00 - 19:00</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Sábado</span>
-                      <span className="text-primary font-semibold">9:00 - 19:30</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Domingo</span>
-                      <span className="text-primary font-semibold">9:00 - 13:00</span>
+                      <span className="text-primary font-semibold">9:00 - 19:00</span>
                     </div>
                   </div>
                 </CardContent>
@@ -572,7 +597,7 @@ const Home = () => {
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a
-                  href="#"
+                  href=""
                   aria-label="X (Twitter) JB Barbershop"
                   className="text-muted-foreground hover:opacity-90"
                 >
@@ -583,8 +608,7 @@ const Home = () => {
 
             <div>
               <h5 className="font-semibold mb-2">Horário</h5>
-              <p className="text-sm">Segunda a Sábado: 09:00 - 19:30</p>
-              <p className="text-sm">Domingo: 09:00 - 13:00</p>
+              <p className="text-sm">Segunda a Sábado: 09:00 - 19:00</p>
             </div>
 
             <div>
