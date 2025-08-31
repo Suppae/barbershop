@@ -46,7 +46,7 @@ const Home = () => {
     {
       name: "Degradê",
       price: "€14",
-      duration: "(45min)",
+      duration: "(40min)",
       icon: Scissors,
       description:
         "Degradê moderno com transição suave. Ideal para quem gosta de um acabamento limpo, atual e sofisticado.",
@@ -331,11 +331,14 @@ const Home = () => {
         </section>
 
         {/* Team Section - NOVA SECÇÃO ADICIONADA */}
-        <section className="py-20 bg-muted/5">
+        <section className="py-2 bg-muted/5">
           <div className="container mx-auto px-4">
             <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
               Os Nossos Profissionais
             </h3>
+            <p className="py-6 text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
+              Conheça a equipa que faz da JB Barber Shop uma referência em qualidade e profissionalismo.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 justify-center">
               {/* Exemplo de profissionais, personalize conforme necessário */}
               <Card className="bg-card border-primary/20 shadow-luxury">
@@ -353,9 +356,7 @@ const Home = () => {
                 </CardContent>
               </Card>
             </div>
-            <p className="text-center text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
-              Conheça a equipa que faz da JB Barber Shop uma referência em qualidade e profissionalismo.
-            </p>
+            
           </div>
         </section>
 
