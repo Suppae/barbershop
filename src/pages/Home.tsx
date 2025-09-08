@@ -350,7 +350,7 @@ const Home = () => {
               </Card>
               <Card className="bg-card border-primary/20 shadow-luxury">
                 <CardContent className="p-6 flex flex-col items-center">
-                  <img src="/images/Brando.PNG" alt="Brando Silva" className="w-28 h-28 rounded-full object-cover mb-4" />
+                  <img src="" alt="Brando Silva" className="w-28 h-28 rounded-full object-cover mb-4" />
                   <h4 className="text-xl font-semibold mb-2 text-foreground">Brando Peral</h4>
                   <p className="text-muted-foreground text-center mb-2">Barbeiro criativo, especialista em personalização de estilos e barbas.</p>
                 </CardContent>

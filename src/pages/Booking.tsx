@@ -19,7 +19,8 @@ const Booking = () => {
     email: "",
     phoneNumber: "",
     haircutType: "",
-    hairdresser: ""
+    hairdresser: "",
+    extras:""
   });
   const [isLoading, setIsLoading] = useState(false);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
@@ -147,7 +148,8 @@ const Booking = () => {
         email: "",
         phoneNumber: "",
         haircutType: "",
-        hairdresser: ""
+        hairdresser: "",
+        extras:""
       });
 
     } catch (error) {
@@ -181,11 +183,66 @@ const Booking = () => {
             Agendar Horário
           </CardTitle>
           <CardDescription className="text-muted-foreground">
-            Preencha os seus dados para agendar o seu horário
+            Preencha com os seus dados para agendar o seu horário
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+
+          <div className="space-y-2 mb-6">
+              <Label htmlFor="haircutType">Tipo de Corte</Label>
+              <Select 
+                value={formData.haircutType} 
+                onValueChange={(value) => handleInputChange("haircutType", value)}
+              >
+                <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
+                  <SelectValue placeholder="Selecione o tipo de corte" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border z-50">
+                  <SelectItem value="corte clássico">Clássico</SelectItem>
+                  <SelectItem value="degradê">Degradê</SelectItem>
+                  <SelectItem value="barba">Personalizado</SelectItem>
+                </SelectContent>
+              </Select>
+          </div>
+
+          <div className="space-y-2 mb-4">
+              <Label htmlFor="extras">Extras</Label>
+              
+              <Select 
+                value={formData.extras} 
+                onValueChange={(value) => handleInputChange("extras", value)}
+                disabled={!formData.haircutType}
+              >
+                <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
+                  <SelectValue placeholder={formData.extras ? "Selecione um extra" : "Primeiro selecione um tipo de corte"} />
+                </SelectTrigger>
+                <SelectContent className="bg-background border z-50">
+                  <SelectItem value="Sobrancelhas">Sobrancelhas</SelectItem>
+                  <SelectItem value="Barba">Barba</SelectItem>
+                  <SelectItem value="BarbaSpa">Barba Spa</SelectItem>
+                  <SelectItem value="Nenhum">Nenhum</SelectItem>
+                </SelectContent>
+              </Select>
+          </div>
+
+            <div className="space-y-2 mb-5">
+              <Label htmlFor="hairdresser">Cabeleireiro</Label>
+              <Select 
+                value={formData.hairdresser} 
+                onValueChange={(value) => handleInputChange("hairdresser", value)}
+              >
+                <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
+                  <SelectValue placeholder="Selecione o cabeleireiro" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border z-50">
+                  <SelectItem value="júlio">Júlio</SelectItem>
+                  <SelectItem value="brando">Brando</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+
+          <form onSubmit={handleSubmit} className="space-y-2">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">Primeiro Nome</Label>
@@ -272,40 +329,6 @@ const Booking = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="haircutType">Tipo de Corte</Label>
-              <Select 
-                value={formData.haircutType} 
-                onValueChange={(value) => handleInputChange("haircutType", value)}
-              >
-                <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
-                  <SelectValue placeholder="Selecione o tipo de corte" />
-                </SelectTrigger>
-                <SelectContent className="bg-background border z-50">
-                  <SelectItem value="corte clássico">Clássico</SelectItem>
-                  <SelectItem value="degradê">Degradê</SelectItem>
-                  <SelectItem value="barba">Personalizado</SelectItem>
-                  <SelectItem value="cabelo e barba">Clássico+barba</SelectItem>
-                  <SelectItem value="cabelo e barba">Degradê+barba</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="hairdresser">Cabeleireiro</Label>
-              <Select 
-                value={formData.hairdresser} 
-                onValueChange={(value) => handleInputChange("hairdresser", value)}
-              >
-                <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
-                  <SelectValue placeholder="Selecione o cabeleireiro" />
-                </SelectTrigger>
-                <SelectContent className="bg-background border z-50">
-                  <SelectItem value="júlio">Júlio</SelectItem>
-                  <SelectItem value="brando">Brando</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
 
             <Button 
               type="submit" 
