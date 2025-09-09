@@ -188,8 +188,8 @@ const Booking = () => {
         </CardHeader>
         <CardContent>
 
-          <div className="space-y-2 mb-6">
-              <Label htmlFor="haircutType">Tipo de Corte</Label>
+          <div className="space-y-2 mb-5">
+              <Label htmlFor="haircutType" className="font-bold">Tipo de Corte</Label>
               <Select 
                 value={formData.haircutType} 
                 onValueChange={(value) => handleInputChange("haircutType", value)}
@@ -205,8 +205,8 @@ const Booking = () => {
               </Select>
           </div>
 
-          <div className="space-y-2 mb-4">
-              <Label htmlFor="extras">Extras</Label>
+          <div className="space-y-2 mb-5">
+              <Label htmlFor="extras" className="font-bold">Extras</Label>
               
               <Select 
                 value={formData.extras} 
@@ -226,7 +226,7 @@ const Booking = () => {
           </div>
 
             <div className="space-y-2 mb-5">
-              <Label htmlFor="hairdresser">Cabeleireiro</Label>
+              <Label htmlFor="hairdresser" className="font-bold">Cabeleireiro</Label>
               <Select 
                 value={formData.hairdresser} 
                 onValueChange={(value) => handleInputChange("hairdresser", value)}
@@ -282,7 +282,7 @@ const Booking = () => {
             <div className="space-y-2">
               <Label htmlFor="time">Hora</Label>
               <Select 
-                value={formData.time} 
+                value={formData.time}
                 onValueChange={(value) => handleInputChange("time", value)}
                 disabled={!formData.date}
               >
