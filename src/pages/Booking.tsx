@@ -217,9 +217,10 @@ const Booking = () => {
                   <SelectValue placeholder={formData.extras ? "Selecione um extra" : "Primeiro selecione um tipo de corte"} />
                 </SelectTrigger>
                 <SelectContent className="bg-background border z-50">
-                  <SelectItem value="Sobrancelhas">Sobrancelhas</SelectItem>
+                  <SelectItem value="Sobrancelhas e barba">Sobrancelhas + Barba</SelectItem>
                   <SelectItem value="Barba">Barba</SelectItem>
                   <SelectItem value="BarbaSpa">Barba Spa</SelectItem>
+                  <SelectItem value="Sobrancelhas">Sobrancelhas</SelectItem>
                   <SelectItem value="Nenhum">Nenhum</SelectItem>
                 </SelectContent>
               </Select>
