@@ -227,13 +227,13 @@ const Booking = () => {
           </div>
 
             <div className="space-y-2 mb-5">
-              <Label htmlFor="hairdresser" className="font-bold">Cabeleireiro</Label>
+              <Label htmlFor="hairdresser" className="font-bold">Barbeiro</Label>
               <Select 
                 value={formData.hairdresser} 
                 onValueChange={(value) => handleInputChange("hairdresser", value)}
               >
                 <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
-                  <SelectValue placeholder="Selecione o cabeleireiro" />
+                  <SelectValue placeholder="Selecione o Barbeiro" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border z-50">
                   <SelectItem value="júlio">Júlio</SelectItem>
