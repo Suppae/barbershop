@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "jbbarbershop",
+  "private_key_id": "c219fbcb10192315bb29a579005aa24a015588e9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDn72+OCyvSBzEV\nxmRgorFpReu0iko/aDvM0S4Z/aF0soiFkzNlEMY662ROIvB2ozbmwqN4h0dAaiXl\nCO8NeFg2R8pCOALuL6DA9YVJ/e0QZLnvnX80makfIMkoTKP6/xDJs7rZY4Dw03Ae\njfC4eNXRn4l79vDMnOpXXPpAN05nYrp81O2pAtWIvOXjOIm4C2kKDz2mRonR91Me\np1IgfF3YlZxc5jE/o69roZyPVN4brU72pQH/3ZpL/1049vwGtBWsUOlKTRCOG92D\neMO7x5zmkZaYqrFRWPHqVEntZvg22qcx7MUnUPopxIIxMmgj/UJHER3ewmGxcTgE\nP65GwcdVAgMBAAECggEAR4oAgDEs6oMCXmOLuYzlKQIConTXUvh9HX9V93lWcC7T\nUlQlkaJbangJv9oiDo3oVMQrdPVRAmrbVmprhd2dY9y/463wJXS2Yl44pyp2EUzo\nVyLexiQxWKMduNru52/+RyCzXPNGpcGp/xqr6dKHrTlGyGBSROKPm7PXkrAcdGGW\nkH9zWenp3W/UcHgoqbZCya4DZ7xLzRMew/Kcuw0fOEEi48nhgYD0FaE54v+bCztm\niqSxFO/frKfOszNa+OgK+QyTIb6R5Q6xpuwOLQW64gIpX5UO2obPwY7zSs/0E86L\nUbPUEsJ+Xpms6qScfUvl5dTTzw9n4jPSAEShWlgLXwKBgQD9lmTOztVAydkjBvg4\nlO3QarBd7Y9d0BmHuqnk+ZpdzwhuA0XNSiH/ea0+TSvZMYEE0oi7DMldTX/T3qLv\nt1b1u8UWQwdnE5BeNkOzRRIzcaPZR6Dlc435eicDu2i7H+29bFeYGqnvPxhep57d\n7uwv1gaWCcTQBuku0D/sfEZ2ywKBgQDqJE8Bb2JPpt0ABKlQX2RIAm0M5dkchueR\nIm91bQTV+yxS18b8tZ3IGdr+zKMDPsBcrkyLNtH/Muv5slf4x05VpBKtMKzSmQBK\nPLqDB3lacLrc2OaCKOiICffO1QQVpMgcBsaqAXgdKILSXMHod8oRX/eLk1/rcov8\nDnxwzCrWXwKBgDwQelIt1X8iEEdmqDamt+mMy7eDxFiBKProMMOmh3S+zA1awxbL\n/1+Gz40ZNFCelCOzRmWfsrZh2+wwKMHE2FkeH6GVQNSeYqyeB80XiCcdPKUDfU27\n4B3+W+1bX4QrHOGoHttNPYEIndoVs+B3bgQqmqbBK5fmeyb2dp2qFfqfAoGBALhW\nv7DkjaUiPUp/YQH7KEudRVfrOiTAfV4Bm3j6zNzfNEVAxtQ89K0O1iDW4dxzMiWF\nwJO2JFzkLW7YH3SpDZ5VX7Lk6Juhg93us/TnFH7E1Al95vVA2doI5wX7JY0Yv8d4\n+j3sjDGArIaMKsooTXmicZV9AP6wn09h5E02IN/HAoGBAOnsc2L1Zy7HhJ+ziv6G\n/HzK2GvQbfr5SRVJXnLFXVEESV//SiGa9F5uF6E/vBaA3rQM6TvgGxunZKUR/S8s\ndIq0IZbdQma9pvW9h1/6p6btMkVibMqC9De5oaA7FGZeIJgo6L74CLZ5tzv3+xIS\njYDUnCCkc9SSFV/OXy6U8RRz\n-----END PRIVATE KEY-----\n",
+  "client_email": "jbbarbershop-calendar@jbbarbershop.iam.gserviceaccount.com",
+  "client_id": "106125038926697408836",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jbbarbershop-calendar%40jbbarbershop.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

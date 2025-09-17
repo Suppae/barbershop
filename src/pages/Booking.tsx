@@ -92,28 +92,8 @@ const Booking = () => {
     setIsLoading(true);
     
     try {
-      // Save to Supabase first
-      const { error: supabaseError } = await supabase
-        .from('Marcações')
-        .insert({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          appointment_date: formData.date,
-          appointment_time: formData.time,
-          email: formData.email,
-          phone_number: formData.phoneNumber,
-          haircut_type: formData.haircutType,
-          hairdresser: formData.hairdresser,
-          ip: null // You can add IP detection if needed
-        });
+      const webhookUrl = 'http://localhost:3000/criar-agendamento';  
 
-      if (supabaseError) {
-        throw new Error(`Supabase error: ${supabaseError.message}`);
-      }
-
-      // Send to webhook as before
-      const webhookUrl = 'https://ruimiranda12.app.n8n.cloud/webhook-test/52a058b1-25e9-4bf1-a573-78a5d89ea5ee';
-      
       await fetch(webhookUrl, {
         method: 'POST',
         headers: {
@@ -130,7 +110,6 @@ const Booking = () => {
           haircutType: formData.haircutType,
           hairdresser: formData.hairdresser,
           timestamp: new Date().toISOString(),
-          source: 'lovable-app'
         })
       });
 
@@ -139,7 +118,6 @@ const Booking = () => {
         description: "Marcação guardada e dados enviados com sucesso.",
       });
 
-      // Reset form after successful submission
       setFormData({
         firstName: "",
         lastName: "",
