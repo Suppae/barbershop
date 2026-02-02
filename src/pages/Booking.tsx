@@ -35,32 +35,29 @@ const Booking = () => {
   // Fetch available time slots when date changes (using secure function)
   useEffect(() => {
     const fetchAvailableSlots = async () => {
-      if (!formData.date) {
+      if (!formData.date || !formData.hairdresser) {
         setAvailableTimeSlots(allTimeSlots);
         return;
       }
 
       try {
-        // Use the secure function to get only occupied time slots (no personal data)
-        const { data: occupiedSlots, error } = await supabase
-          .rpc('get_occupied_time_slots_secure', { target_date: formData.date });
+        // Buscar horários disponíveis do Google Calendar via backend
+        const response = await fetch(
+          `http://localhost:3000/horarios-disponiveis?hairdresser=${encodeURIComponent(formData.hairdresser)}&date=${formData.date}`
+        );
 
-        if (error) {
-          console.error('Error fetching occupied slots:', error);
+        if (!response.ok) {
+          console.error('Error fetching available slots');
           setAvailableTimeSlots(allTimeSlots);
           return;
         }
 
-        const occupiedTimes = occupiedSlots?.map(slot => {
-          // Convert "11:00:00" to "11:00" format
-          return slot.time_slot?.substring(0, 5);
-        }).filter(Boolean) || [];
-        
-        const available = allTimeSlots.filter(time => !occupiedTimes.includes(time));
-        setAvailableTimeSlots(available);
+        const data = await response.json();
+        const availableHours = data.horarios || [];
+        setAvailableTimeSlots(availableHours);
 
         // Reset time if currently selected time is no longer available
-        if (formData.time && !available.includes(formData.time)) {
+        if (formData.time && !availableHours.includes(formData.time)) {
           setFormData(prev => ({ ...prev, time: "" }));
         }
       } catch (error) {
@@ -70,9 +67,24 @@ const Booking = () => {
     };
 
     fetchAvailableSlots();
-  }, [formData.date, formData.time]);
+  }, [formData.date, formData.hairdresser]);
 
   const handleInputChange = (field: string, value: string) => {
+    // Validar se é domingo quando o campo é data
+    if (field === "date" && value) {
+      const selectedDate = new Date(value);
+      const dayOfWeek = selectedDate.getDay();
+      
+      if (dayOfWeek === 0) { // 0 = domingo
+        toast({
+          title: "Data Inválida",
+          description: "Não é possível agendar aos domingos.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+    
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -94,12 +106,11 @@ const Booking = () => {
     try {
       const webhookUrl = 'http://localhost:3000/criar-agendamento';  
 
-      await fetch(webhookUrl, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'no-cors',
         body: JSON.stringify({
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -113,22 +124,41 @@ const Booking = () => {
         })
       });
 
-      toast({
-        title: "Sucesso!",
-        description: "Marcação guardada e dados enviados com sucesso.",
-      });
+      const responseData = await response.json();
 
-      setFormData({
-        firstName: "",
-        lastName: "",
-        date: "",
-        time: "",
-        email: "",
-        phoneNumber: "",
-        haircutType: "",
-        hairdresser: "",
-        extras:""
-      });
+      if (response.status === 409) {
+        // Horário já ocupado
+        toast({
+          title: "Horário Indisponível",
+          description: responseData.erro || "O cabeleireiro não tem disponibilidade neste horário.",
+          variant: "destructive",
+        });
+      } else if (response.ok) {
+        // Sucesso
+        toast({
+          title: "Sucesso!",
+          description: "Marcação guardada e dados enviados com sucesso.",
+        });
+
+        setFormData({
+          firstName: "",
+          lastName: "",
+          date: "",
+          time: "",
+          email: "",
+          phoneNumber: "",
+          haircutType: "",
+          hairdresser: "",
+          extras:""
+        });
+      } else {
+        // Outro erro
+        toast({
+          title: "Erro",
+          description: responseData.erro || "Erro ao enviar dados. Tente novamente.",
+          variant: "destructive",
+        });
+      }
 
     } catch (error) {
       console.error('Error:', error);
@@ -254,6 +284,7 @@ const Booking = () => {
                 type="date"
                 value={formData.date}
                 onChange={(e) => handleInputChange("date", e.target.value)}
+                disabled={!formData.hairdresser}
                 className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
               />
             </div>

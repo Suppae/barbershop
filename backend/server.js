@@ -77,6 +77,94 @@ function buildLisbonDateTime(dateStr, timeStr) {
   // A API trata do fuso.
   return `${dateStr}T${timeStr}:00`;
 }
+// Helper: verificar disponibilidade do cabeleireiro numa data/hora específica
+async function checkHairdresserAvailability(hairdresser, dateStr, timeStr) {
+  try {
+    // Construir intervalo de tempo: 1 hora (padrão de corte)
+    const start = new Date(`${dateStr}T${timeStr}:00`);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    
+    const timeMin = start.toISOString();
+    const timeMax = end.toISOString();
+
+    // Buscar eventos no calendário para este intervalo
+    const response = await calendar.events.list({
+      calendarId: CALENDAR_ID,
+      timeMin: timeMin,
+      timeMax: timeMax,
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    const events = response.data.items || [];
+    console.log(JSON.stringify(events))
+    // Verificar se existe algum evento com este cabeleireiro
+    const conflictingEvent = events.find((event) => {
+      const description = event.description || "";
+      console.log(description.includes(`Cabeleireiro: ${hairdresser}`), "aqui")
+      return description.includes(`Cabeleireiro: ${hairdresser}`);
+    });
+
+    return !conflictingEvent; // true se disponível, false se há conflito
+  } catch (err) {
+    console.error("Erro ao verificar disponibilidade:", err.message);
+    throw err;
+  }
+}
+
+// Helper: buscar horários disponíveis para um barbeiro numa data específica
+async function getAvailableTimeSlots(hairdresser, dateStr) {
+  try {
+    // Horários padrão (9h às 19h, excluindo 13h de almoço)
+    const allTimeSlots = [
+      "09:00", "10:00", "11:00", "12:00",
+      "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"
+    ];
+
+    // Construir intervalo para o dia completo
+    const dayStart = new Date(`${dateStr}T00:00:00`);
+    const dayEnd = new Date(`${dateStr}T23:59:59`);
+    
+    const timeMin = dayStart.toISOString();
+    const timeMax = dayEnd.toISOString();
+
+    // Buscar todos os eventos do calendário para este dia
+    const response = await calendar.events.list({
+      calendarId: CALENDAR_ID,
+      timeMin: timeMin,
+      timeMax: timeMax,
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    const events = response.data.items || [];
+
+    // Filtrar eventos do cabeleireiro específico
+    const hairdresserEvents = events.filter((event) => {
+      const description = event.description || "";
+      return description.includes(`Cabeleireiro: ${hairdresser}`);
+    });
+
+    // Encontrar horários ocupados
+    const occupiedTimes = new Set();
+    hairdresserEvents.forEach((event) => {
+      if (event.start?.dateTime) {
+        const startTime = new Date(event.start.dateTime);
+        const hour = String(startTime.getHours()).padStart(2, "0");
+        const minute = String(startTime.getMinutes()).padStart(2, "0");
+        const timeSlot = `${hour}:${minute}`;
+        occupiedTimes.add(timeSlot);
+      }
+    });
+
+    // Retornar apenas horários disponíveis
+    const availableSlots = allTimeSlots.filter(time => !occupiedTimes.has(time));
+    return availableSlots;
+  } catch (err) {
+    console.error("Erro ao buscar horários disponíveis:", err.message);
+    throw err;
+  }
+}
 
 const server = http.createServer(async (req, res) => {
   // CORS simples (se precisares no frontend)
@@ -87,6 +175,28 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     return res.end();
+  }
+
+  if (req.method === "GET" && req.url.startsWith("/horarios-disponiveis")) {
+    try {
+      const url = new URL(req.url, `http://${req.headers.host}`);
+      const hairdresser = url.searchParams.get("hairdresser");
+      const date = url.searchParams.get("date");
+
+      if (!hairdresser || !date) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Parâmetros em falta: hairdresser e date" }));
+      }
+
+      const availableSlots = await getAvailableTimeSlots(hairdresser, date);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ horarios: availableSlots }));
+    } catch (e) {
+      console.error("Erro ao buscar horários disponíveis:", e.message);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ erro: e.message || "Erro ao buscar horários" }));
+    }
   }
 
   if (req.method === "POST" && req.url === "/criar-agendamento") {
@@ -101,6 +211,26 @@ const server = http.createServer(async (req, res) => {
           res.writeHead(400, { "Content-Type": "application/json" });
           return res.end(JSON.stringify({ erro: `Campo em falta: ${k}` }));
         }
+      }
+
+      // Validar se é domingo
+      const selectedDate = new Date(data.date);
+      if (selectedDate.getDay() === 0) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Não é possível agendar aos domingos." }));
+      }
+
+      // Verificar disponibilidade do cabeleireiro
+      const isAvailable = await checkHairdresserAvailability(data.hairdresser, data.date, data.time);
+      
+      console.log(isAvailable)
+      if (!isAvailable) {
+        res.writeHead(409, { "Content-Type": "application/json" });
+        return res.end(
+          JSON.stringify({
+            erro: `O cabeleireiro "${data.hairdresser}" não tem disponibilidade neste horário.`,
+          })
+        );
       }
 
       const startDateTime = buildLisbonDateTime(data.date, data.time);
