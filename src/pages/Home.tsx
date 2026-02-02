@@ -16,10 +16,10 @@ const Home = () => {
       "Degradê + Barba",
     ].indexOf("Clássico")
   );
-  const [menuOpen, setMenuOpen] = useState(false);
   // header / hero scroll detection
   const heroRef = useRef<HTMLElement | null>(null);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
+  const [reviews, setReviews] = useState<Array<{ author_name: string; text: string; rating: number }>>([]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -40,6 +40,25 @@ const Home = () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
+  }, []);
+
+  // Buscar reviews do Google Maps via backend
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/reviews');
+        if (response.ok) {
+          const data = await response.json();
+          // Filtrar apenas reviews com mais de 4 estrelas
+          const filteredReviews = data.reviews.filter((review: any) => review.rating > 4);
+          setReviews(filteredReviews);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar reviews:', error);
+      }
+    };
+
+    fetchReviews();
   }, []);
 
   const services = [
@@ -111,59 +130,14 @@ const Home = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           />
 
-          {/* Botão Marcar Agendamento ao centro absoluto */}
-          <div className="absolute left-1/2 -translate-x-1/2">
-            <Button
-              size="sm"
-              className="bg-gradient-primary px-3 py-2"
-              onClick={() => navigate("/booking")}
-            >
-              Marcar
-            </Button>
-          </div>
-
-          {/* Menu à direita */}
-          <button
-            className="ml-2 p-2 rounded-full text-primary focus:outline-none"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Abrir menu"
+          {/* Botão Marcar Agendamento */}
+          <Button
+            size="sm"
+            className="bg-gradient-primary px-10 py-2"
+            onClick={() => navigate("/booking")}
           >
-            <Menu className="w-7 h-7" />
-          </button>
-          
-          {/* Menu lateral */}
-          {menuOpen && (
-            <div className="fixed top-0 right-0 w-48 h-full bg-card shadow-lg z-50 flex flex-col items-end p-4 animate-slide-in">
-              <button
-                className="mb-6 p-2 text-muted-foreground"
-                onClick={() => setMenuOpen(false)}
-                aria-label="Fechar menu"
-              >
-                <X className="w-6 h-6" />
-              </button>
-              {/* <Button
-                variant="ghost"
-                className="w-full mb-2 text-foreground"
-                onClick={() => { navigate("/products"); setMenuOpen(false); }}
-              >
-                Produtos
-              </Button> */}
-              <Button
-                variant="ghost"
-                className="w-full mb-2 text-foreground"
-                onClick={() => { document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); }}
-              >
-                Serviços
-              </Button>
-              <Button
-                variant="ghost"
-                className="w-full text-foreground"
-                onClick={() => { navigate("/booking"); setMenuOpen(false); }}
-              >
-                Marcações
-              </Button>
-            </div>
-          )}
+            Marcar
+          </Button>
         </div>
 
         {/* Desktop Header */}
@@ -216,10 +190,10 @@ const Home = () => {
 
             {/* mantive apenas "JB" como título sobre a imagem, texto em branco */}
 
-            <p className="text-xl md:text-7xl text-white/90 mb-12 max-w-5xl text-left font-bold">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl text-white/90 mb-12 max-w-5xl text-left font-bold leading-tight">
               Experiência premium em cuidados masculinos. Cortes modernos, barbas impecáveis,
               ambiente sofisticado.
-            </p>
+            </h1>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-start relative">
               <Button
@@ -456,78 +430,35 @@ const Home = () => {
         {/* Testimonials Section */}
         <section className="py-20 bg-muted/5 overflow-hidden">
           <div className="container mx-auto px-4">
-            <h3 className="text-4xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
+            <h3 className="text-4xl font-bold text-center mb-12 bg-gradient-primary bg-clip-text text-transparent">
               Deixa-nos a tua opinião!
-              </h3>
-              <div className="flex justify-center mb-4">
-                <Button
-                  size="lg"
-                  className="bg-gradient-primary px-6 py-3 "
-                  asChild
-                >
-                  <a
-                    href="https://www.google.com/maps/place/JB+BARBER+SHOP/@39.9172688,-8.623465,17z/data=!4m8!3m7!1s0xd2267b6c089c8ed:0x84726e41a2ca5d8e!8m2!3d39.9172688!4d-8.623465!9m1!1b1!16s%2Fg%2F11xdg4yp7d?entry=ttu&g_ep=EgoyMDI1MDgxNy4wIKXMDSoASAFQAw%3D%3D"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                  Google
-                  </a>
-                </Button>
-              </div>
-              
-            
+            </h3>
             
             <div className="relative">
               <div className="flex gap-8 animate-[slideReverse_25s_linear_infinite]">
-                <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
+                {reviews.length > 0 ? (
+                  reviews.map((review, index) => (
+                    <div key={index} className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                      <div className="flex items-center mb-4">
+                        {[...Array(review.rating || 5)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                        ))}
+                      </div>
+                      <p className="text-foreground mb-4">"{review.text}"</p>
+                      <p className="text-sm text-muted-foreground">- {review.author_name}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
+                    <div className="flex items-center mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <p className="text-foreground mb-4">"Muito bom! Excelente atendimento e profissionalismo. Voltei várias vezes!"</p>
+                    <p className="text-sm text-muted-foreground">- João Silva</p>
                   </div>
-                  <p className="text-foreground mb-4">"Excelente atendimento! O Júlio é um verdadeiro artista com a tesoura."</p>
-                  <p className="text-sm text-muted-foreground">- Miguel Santos</p>
-                </div>
-                
-                <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground mb-4">"Ambiente top, profissionais de qualidade. Recomendo vivamente!"</p>
-                  <p className="text-sm text-muted-foreground">- João Silva</p>
-                </div>
-                
-                <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground mb-4">"O Brando fez um degradê perfeito! Voltarei certamente."</p>
-                  <p className="text-sm text-muted-foreground">- Carlos Ferreira</p>
-                </div>
-                
-                <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground mb-4">"Melhor barbearia da região! Serviço 5 estrelas."</p>
-                  <p className="text-sm text-muted-foreground">- Pedro Costa</p>
-                </div>
-                
-                <div className="min-w-[350px] bg-card p-6 rounded-xl shadow-luxury border border-primary/20">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground mb-4">"Sempre saio satisfeito! Equipa muito profissional."</p>
-                  <p className="text-sm text-muted-foreground">- Rui Mendes</p>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -598,6 +529,30 @@ const Home = () => {
               Agendar Agora
               <Scissors className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-foreground/70 group-hover:cutting-scissors" style={{ animationDelay: '0.5s' }} />
             </Button>
+          </div>
+        </section>
+
+        {/* Google Maps Section */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-primary bg-clip-text text-transparent">
+              Localização
+            </h3>
+            
+            <div className="w-full rounded-xl overflow-hidden shadow-luxury">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3091.849629385894!2d-8.623465!3d39.9172688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2267b6c089c8ed%3A0x84726e41a2ca5d8e!2sJB%20BARBER%20SHOP!5e0!3m2!1spt-PT!2spt!4v1234567890"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            
+            <p className="text-center text-lg text-muted-foreground mt-8">
+              Visite-nos em Pombal - Av. Heróis do Ultramar 61
+            </p>
           </div>
         </section>
 

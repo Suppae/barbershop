@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -58,6 +60,11 @@ All colors MUST be HSL.
     --sidebar-border: 45 15% 25%;
 
     --sidebar-ring: 45 100% 60%;
+  }
+
+  /* Fonte moderna para o body */
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   .dark {

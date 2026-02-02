@@ -199,7 +199,31 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  if (req.method === "POST" && req.url === "/criar-agendamento") {
+  if (req.method === "GET" && req.url === "/reviews") {
+    try {
+      const reviews = [
+        {
+          author_name: "Luís Manuel",
+          text: "Serviço top! Barbeiros muito profissionais e atenciosos. Ambiente limpo, moderno e acolhedor. Recomendo a 100%! A JB Barbershop é sem dúvida a melhor barbearia em Pombal.",
+          rating: 5
+        },
+        {
+          author_name: "Diego Rodrigues",
+          text: "Top, melhor barbearia de Pombal",
+          rating: 5
+        },
+      ];
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ reviews }));
+    } catch (e) {
+      console.error("Erro ao buscar reviews:", e.message);
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ erro: e.message || "Erro ao buscar reviews" }));
+    }
+  }
+
+  if (req.method === "POST") {
     try {
       const data = await readJsonBody(req);
       console.log("Recebi:", data);
