@@ -141,13 +141,13 @@ const Home = () => {
               >
                 <X className="w-6 h-6" />
               </button>
-              <Button
+              {/* <Button
                 variant="ghost"
                 className="w-full mb-2 text-foreground"
                 onClick={() => { navigate("/products"); setMenuOpen(false); }}
               >
                 Produtos
-              </Button>
+              </Button> */}
               <Button
                 variant="ghost"
                 className="w-full mb-2 text-foreground"
@@ -177,9 +177,9 @@ const Home = () => {
             />
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
+            {/* <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => navigate("/products")}>
               Produtos
-            </Button>
+            </Button> */}
             <Button variant="ghost" className={`${isHeaderSolid ? 'text-foreground' : 'text-white'}`} onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}>
               Serviços
             </Button>
@@ -205,7 +205,7 @@ const Home = () => {
         <section ref={heroRef} className="relative h-screen flex items-center justify-start">
           {/* imagem grande de fundo */}
           <img
-            src="/images/image.png"
+            src="/images/pombal.png"
             alt="Pombal - JB Barber Shop"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
