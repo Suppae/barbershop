@@ -26,6 +26,29 @@ const Booking = () => {
   const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
 
+  const parseYMDToLocalDate = (value: string) => {
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const isSameLocalDay = (dateStr: string) => {
+    const selected = parseYMDToLocalDate(dateStr);
+    const now = new Date();
+    return (
+      selected.getFullYear() === now.getFullYear() &&
+      selected.getMonth() === now.getMonth() &&
+      selected.getDate() === now.getDate()
+    );
+  };
+
+  const isPastTimeSlot = (dateStr: string, timeStr: string) => {
+    if (!isSameLocalDay(dateStr)) return false;
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    const now = new Date();
+    const slotTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+    return now >= slotTime;
+  };
+
   // Define available time slots (9h às 19h, excluindo 13h - hora de almoço)
   const allTimeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
@@ -54,10 +77,13 @@ const Booking = () => {
 
         const data = await response.json();
         const availableHours = data.horarios || [];
-        setAvailableTimeSlots(availableHours);
+        const filteredHours = formData.date
+          ? availableHours.filter((time: string) => !isPastTimeSlot(formData.date, time))
+          : availableHours;
+        setAvailableTimeSlots(filteredHours);
 
         // Reset time if currently selected time is no longer available
-        if (formData.time && !availableHours.includes(formData.time)) {
+        if (formData.time && !filteredHours.includes(formData.time)) {
           setFormData(prev => ({ ...prev, time: "" }));
         }
       } catch (error) {
@@ -96,6 +122,15 @@ const Booking = () => {
       toast({
         title: "Erro",
         description: "Por favor, preencha todos os campos",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.date && formData.time && isPastTimeSlot(formData.date, formData.time)) {
+      toast({
+        title: "Horário Indisponível",
+        description: "Não é possível marcar em horário já passado.",
         variant: "destructive",
       });
       return;

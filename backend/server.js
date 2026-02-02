@@ -77,6 +77,23 @@ function buildLisbonDateTime(dateStr, timeStr) {
   // A API trata do fuso.
   return `${dateStr}T${timeStr}:00`;
 }
+
+function getLisbonNow() {
+  return new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Lisbon" }));
+}
+
+function getLisbonTodayYMD() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Lisbon" });
+}
+
+function isPastTimeSlot(dateStr, timeStr) {
+  const todayYMD = getLisbonTodayYMD();
+  if (dateStr !== todayYMD) return false;
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const now = getLisbonNow();
+  const slotTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+  return now >= slotTime;
+}
 // Helper: verificar disponibilidade do cabeleireiro numa data/hora específica
 async function checkHairdresserAvailability(hairdresser, dateStr, timeStr) {
   try {
@@ -189,9 +206,10 @@ const server = http.createServer(async (req, res) => {
       }
 
       const availableSlots = await getAvailableTimeSlots(hairdresser, date);
+      const filteredSlots = availableSlots.filter((time) => !isPastTimeSlot(date, time));
 
       res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify({ horarios: availableSlots }));
+      return res.end(JSON.stringify({ horarios: filteredSlots }));
     } catch (e) {
       console.error("Erro ao buscar horários disponíveis:", e.message);
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -242,6 +260,11 @@ const server = http.createServer(async (req, res) => {
       if (selectedDate.getDay() === 0) {
         res.writeHead(400, { "Content-Type": "application/json" });
         return res.end(JSON.stringify({ erro: "Não é possível agendar aos domingos." }));
+      }
+
+      if (isPastTimeSlot(data.date, data.time)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Não é possível marcar em horário já passado." }));
       }
 
       // Verificar disponibilidade do cabeleireiro
