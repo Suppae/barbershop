@@ -87,46 +87,6 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      // Save to Supabase first
-      const { error: supabaseError } = await supabase
-        .from('Marcações')
-        .insert({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          appointment_date: formData.date,
-          appointment_time: formData.time,
-          email: formData.email,
-          phone_number: formData.phoneNumber,
-          haircut_type: formData.haircutType,
-          ip: null // You can add IP detection if needed
-        });
-
-      if (supabaseError) {
-        throw new Error(`Supabase error: ${supabaseError.message}`);
-      }
-
-      // Send to webhook as before
-      const webhookUrl = 'https://ruimiranda12.app.n8n.cloud/webhook-test/52a058b1-25e9-4bf1-a573-78a5d89ea5ee';
-      
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: 'no-cors',
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          date: formData.date,
-          time: formData.time,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber,
-          haircutType: formData.haircutType,
-          timestamp: new Date().toISOString(),
-          source: 'lovable-app'
-        })
-      });
-
       toast({
         title: "Sucesso!",
         description: "Marcação guardada e dados enviados com sucesso.",

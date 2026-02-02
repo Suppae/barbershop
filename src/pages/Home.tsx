@@ -205,7 +205,7 @@ const Home = () => {
         <section ref={heroRef} className="relative h-screen flex items-center justify-start">
           {/* imagem grande de fundo */}
           <img
-            src="/images/pombal.jpg"
+            src="/images/image.png"
             alt="Pombal - JB Barber Shop"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -224,15 +224,14 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-6 justify-start relative">
               <Button
                 size="lg"
-                className="bg-gradient-primary hover:opacity-90 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6 bouncing-element"
+                className="bg-gradient-primary hover:opacity-90 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6"
                 onClick={() => navigate("/booking")}
-              >
+              > 
                 Marcar Agendamento
               </Button>
               <Button
-                variant="outline"
                 size="lg"
-                className="border-primary text-white hover:bg-primary/10 text-lg px-8 py-6"
+                className="bg-gradient-primary hover:opacity-90 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6"
                 onClick={() => document.getElementById("services-section")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Ver Serviços
