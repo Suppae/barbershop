@@ -49,6 +49,21 @@ const Booking = () => {
     return now >= slotTime;
   };
 
+  const isPastDate = (dateStr: string) => {
+    const selected = parseYMDToLocalDate(dateStr);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return selected < today;
+  };
+
+  const getTodayYMD = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   // Define available time slots (9h às 19h, excluindo 13h - hora de almoço)
   const allTimeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
@@ -109,6 +124,15 @@ const Booking = () => {
         });
         return;
       }
+
+      if (isPastDate(value)) {
+        toast({
+          title: "Data Inválida",
+          description: "Não é possível agendar em datas passadas.",
+          variant: "destructive",
+        });
+        return;
+      }
     }
     
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -122,6 +146,15 @@ const Booking = () => {
       toast({
         title: "Erro",
         description: "Por favor, preencha todos os campos",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.date && isPastDate(formData.date)) {
+      toast({
+        title: "Data Inválida",
+        description: "Não é possível agendar em datas passadas.",
         variant: "destructive",
       });
       return;
@@ -319,6 +352,7 @@ const Booking = () => {
                 type="date"
                 value={formData.date}
                 onChange={(e) => handleInputChange("date", e.target.value)}
+                min={getTodayYMD()}
                 disabled={!formData.hairdresser}
                 className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
               />

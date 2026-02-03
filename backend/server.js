@@ -86,6 +86,11 @@ function getLisbonTodayYMD() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Lisbon" });
 }
 
+function isPastDate(dateStr) {
+  const todayYMD = getLisbonTodayYMD();
+  return dateStr < todayYMD;
+}
+
 function isPastTimeSlot(dateStr, timeStr) {
   const todayYMD = getLisbonTodayYMD();
   if (dateStr !== todayYMD) return false;
@@ -205,6 +210,11 @@ const server = http.createServer(async (req, res) => {
         return res.end(JSON.stringify({ erro: "Parâmetros em falta: hairdresser e date" }));
       }
 
+      if (isPastDate(date)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Não é possível marcar em datas passadas." }));
+      }
+
       const availableSlots = await getAvailableTimeSlots(hairdresser, date);
       const filteredSlots = availableSlots.filter((time) => !isPastTimeSlot(date, time));
 
@@ -260,6 +270,11 @@ const server = http.createServer(async (req, res) => {
       if (selectedDate.getDay() === 0) {
         res.writeHead(400, { "Content-Type": "application/json" });
         return res.end(JSON.stringify({ erro: "Não é possível agendar aos domingos." }));
+      }
+
+      if (isPastDate(data.date)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Não é possível marcar em datas passadas." }));
       }
 
       if (isPastTimeSlot(data.date, data.time)) {
