@@ -174,7 +174,7 @@ const Booking = () => {
     setIsLoading(true);
     
     try {
-      const webhookUrl = 'http://localhost:3000/criar-agendamento';  
+      const webhookUrl = `${apiBaseUrl}/criar-agendamento`;  
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
