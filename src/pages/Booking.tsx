@@ -375,21 +375,22 @@ const Booking = () => {
                     <SelectItem value="__no_slots__" disabled className="text-muted-foreground">
                       Não há horários disponíveis
                     </SelectItem>
-                  ) : null}
-                  {allTimeSlots.map((time) => {
-                    const isAvailable = formData.date ? availableTimeSlots.includes(time) : false;
-                    const isDisabled = !formData.date || !isAvailable;
-                    return (
-                      <SelectItem
-                        key={time}
-                        value={time}
-                        disabled={isDisabled}
-                        className={isDisabled ? "text-muted-foreground" : ""}
-                      >
-                        {time}
-                      </SelectItem>
-                    );
-                  })}
+                  ) : (
+                    allTimeSlots.map((time) => {
+                      const isAvailable = formData.date ? availableTimeSlots.includes(time) : false;
+                      const isDisabled = !formData.date || !isAvailable;
+                      return (
+                        <SelectItem
+                          key={time}
+                          value={time}
+                          disabled={isDisabled}
+                          className={isDisabled ? "text-muted-foreground" : ""}
+                        >
+                          {time}
+                        </SelectItem>
+                      );
+                    })
+                  )}
                 </SelectContent>
               </Select>
             </div>
