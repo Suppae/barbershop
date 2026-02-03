@@ -370,7 +370,7 @@ const Booking = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-background border z-50">
                   {availableTimeSlots.length === 0 && formData.date ? (
-                    <SelectItem value="" disabled>
+                    <SelectItem value="__no_slots__" disabled>
                       Não há horários disponíveis
                     </SelectItem>
                   ) : (
