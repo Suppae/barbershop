@@ -91,6 +91,16 @@ function isPastDate(dateStr) {
   return dateStr < todayYMD;
 }
 
+function isMoreThan30DaysAhead(dateStr) {
+  const today = new Date();
+  const selectedDate = new Date(dateStr);
+  const maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const selectedDateOnly = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+  const maxDateOnly = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+  return selectedDateOnly > maxDateOnly;
+}
+
 function isPastTimeSlot(dateStr, timeStr) {
   const todayYMD = getLisbonTodayYMD();
   if (dateStr !== todayYMD) return false;
@@ -275,6 +285,11 @@ const server = http.createServer(async (req, res) => {
       if (isPastDate(data.date)) {
         res.writeHead(400, { "Content-Type": "application/json" });
         return res.end(JSON.stringify({ erro: "Não é possível marcar em datas passadas." }));
+      }
+
+      if (isMoreThan30DaysAhead(data.date)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ erro: "Não é possível marcar com mais de 30 dias de antecedência." }));
       }
 
       if (isPastTimeSlot(data.date, data.time)) {

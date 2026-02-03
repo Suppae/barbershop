@@ -66,6 +66,15 @@ const Booking = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const getMaxDateYMD = () => {
+    const now = new Date();
+    const maxDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const year = maxDate.getFullYear();
+    const month = String(maxDate.getMonth() + 1).padStart(2, "0");
+    const day = String(maxDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   // Define available time slots (9h às 19h, excluindo 13h - hora de almoço)
   const allTimeSlots = [
     "09:00", "10:00", "11:00", "12:00", 
@@ -112,6 +121,16 @@ const Booking = () => {
     fetchAvailableSlots();
   }, [formData.date, formData.hairdresser]);
 
+  const isMoreThan30DaysAhead = (dateStr: string) => {
+    const today = new Date();
+    const selectedDate = new Date(dateStr);
+    const maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const selectedDateOnly = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+    const maxDateOnly = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+    return selectedDateOnly > maxDateOnly;
+  };
+
   const handleInputChange = (field: string, value: string) => {
     // Validar se é domingo quando o campo é data
     if (field === "date" && value) {
@@ -131,6 +150,15 @@ const Booking = () => {
         toast({
           title: "Data Inválida",
           description: "Não é possível agendar em datas passadas.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (isMoreThan30DaysAhead(value)) {
+        toast({
+          title: "Data Inválida",
+          description: "Marcação tem um prazo de 30 dias.",
           variant: "destructive",
         });
         return;
