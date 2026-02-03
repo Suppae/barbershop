@@ -26,6 +26,8 @@ const Booking = () => {
   const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
 
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || `${window.location.protocol}//${window.location.hostname}:3000`;
+
   const parseYMDToLocalDate = (value: string) => {
     const [year, month, day] = value.split("-").map(Number);
     return new Date(year, month - 1, day);
@@ -74,19 +76,19 @@ const Booking = () => {
   useEffect(() => {
     const fetchAvailableSlots = async () => {
       if (!formData.date || !formData.hairdresser) {
-        setAvailableTimeSlots(allTimeSlots);
+        setAvailableTimeSlots([]);
         return;
       }
 
       try {
         // Buscar horários disponíveis do Google Calendar via backend
         const response = await fetch(
-          `http://localhost:3000/horarios-disponiveis?hairdresser=${encodeURIComponent(formData.hairdresser)}&date=${formData.date}`
+          `${apiBaseUrl}/horarios-disponiveis?hairdresser=${encodeURIComponent(formData.hairdresser)}&date=${formData.date}`
         );
 
         if (!response.ok) {
           console.error('Error fetching available slots');
-          setAvailableTimeSlots(allTimeSlots);
+          setAvailableTimeSlots([]);
           return;
         }
 
@@ -103,7 +105,7 @@ const Booking = () => {
         }
       } catch (error) {
         console.error('Error:', error);
-        setAvailableTimeSlots(allTimeSlots);
+        setAvailableTimeSlots([]);
       }
     };
 
@@ -369,17 +371,25 @@ const Booking = () => {
                   <SelectValue placeholder={formData.date ? "Selecione uma hora" : "Primeiro selecione uma data"} />
                 </SelectTrigger>
                 <SelectContent className="bg-background border z-50">
-                  {availableTimeSlots.length === 0 && formData.date ? (
-                    <SelectItem value="__no_slots__" disabled>
+                  {formData.date && availableTimeSlots.length === 0 ? (
+                    <SelectItem value="__no_slots__" disabled className="text-muted-foreground">
                       Não há horários disponíveis
                     </SelectItem>
-                  ) : (
-                    availableTimeSlots.map((time) => (
-                      <SelectItem key={time} value={time}>
+                  ) : null}
+                  {allTimeSlots.map((time) => {
+                    const isAvailable = formData.date ? availableTimeSlots.includes(time) : false;
+                    const isDisabled = !formData.date || !isAvailable;
+                    return (
+                      <SelectItem
+                        key={time}
+                        value={time}
+                        disabled={isDisabled}
+                        className={isDisabled ? "text-muted-foreground" : ""}
+                      >
                         {time}
                       </SelectItem>
-                    ))
-                  )}
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
