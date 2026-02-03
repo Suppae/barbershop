@@ -318,7 +318,7 @@ const Home = () => {
                 <CardContent className="p-6 flex flex-col items-center">
                   <img src="/images/barbeiro1.png" alt="Júlio Barreto" className="w-28 h-28 rounded-full object-cover mb-4" />
                   <h4 className="text-xl font-semibold mb-2 text-foreground">Júlio</h4>
-                  <p className="text-muted-foreground text-center mb-2">Especialista em cortes clássicos e degradê. Fundador da JB Barber Shop.</p>
+                  <p className="text-muted-foreground text-center mb-2">Especialista em cortes clássicos e degradê. </p>
                 </CardContent>
               </Card>
               <Card className="bg-card border-primary/20 shadow-luxury">
@@ -588,8 +588,8 @@ const Home = () => {
 
             <div>
               <h5 className="font-semibold mb-2">Contactos</h5>
-              <p className="text-sm">961817270</p>
-              <p className="text-sm">912773460</p>
+              <p className="text-sm">Júlio:961817270</p>
+              <p className="text-sm">Brando:912773460</p>
             </div>
 
             <div>
